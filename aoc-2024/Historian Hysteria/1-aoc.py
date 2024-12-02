@@ -12,5 +12,3 @@ result2 = [i * np.count_nonzero(sortedR == i) for i in sortedL if np.count_nonze
 
 print("A: ", sum(result))
 print("B: ", sum(result2))
-
-
