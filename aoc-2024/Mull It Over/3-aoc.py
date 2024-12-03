@@ -1,17 +1,17 @@
 import re
 from data import data
 
-def find_mul(mul_data):
-    pattern = r'mul\((\d+),\s*(\d+)\)'
-    mul_list = []
-    matches = re.findall(pattern, mul_data)
-    for m in matches:
-        num1, num2 = map(int, m)
-        mul_list.append(num1 * num2)
 
-    return mul_list
+matches = re.findall(r"mul\((\d+),\s*(\d+)\)", data)
+skip_mul = re.findall(
+            r"mul\(\d+,\d+\)|do\(\)|don't\(\)", data
+        )
 
-result = find_mul(data)
-data_sum = sum(result)
+result_a = sum(int(x) * int(y) for x, y in matches)
+print(result_a)
 
-print(data_sum)
+result_b = sum(int(x) * int(y)
+               for match in skip_mul
+               if (flag := (match == "do()") or (match != "don't()" and globals().get("flag", True))) and match.startswith("mul(")
+               for x, y in [match[4:-1].split(",")])
+print(result_b)
